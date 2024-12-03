@@ -17,7 +17,7 @@ public:
     // push a movie into the heap
     void push(movie m) {
         movies.push_back(m);
-        heapifyUp(movies.size() - 1);  // Maintain max-heap property
+        heapifyUp(movies.size() - 1);
     }
 
     // removes and returns the least popular yet highest-rated movie

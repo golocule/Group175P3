@@ -8,12 +8,16 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "readData.h"
 
 using namespace std;
 
 class MaxHeap {
+    int sortElement;
 public:
+    MaxHeap(int sortElement) {
+        this->sortElement = sortElement;
+    }
+
     // push a movie into the heap
     void push(movie m) {
         movies.push_back(m);
@@ -31,6 +35,8 @@ public:
         heapifyDown(0);
         return top;
     }
+
+    // returns the movies vector
 
     // returns the least popular yet highest-rated movie
     movie top() {
@@ -57,9 +63,21 @@ private:
     void heapifyUp(int index) {
         while (index > 0) {
             int parent = (index - 1) / 2;
-            if (computeScore(movies[parent]) >= computeScore(movies[index])) {
-                break;
+            if (sortElement == 0) {
+                if (computeScore(movies[parent]) >= computeScore(movies[index])) {
+                    break;
+                }
+                // conditional statements to accommodate user input
+            } else if (sortElement == 1) {
+                if (movies[parent].popularity >= movies[index].popularity) {
+                    break;
+                }
+            } else if (sortElement == 2) {
+                if (movies[parent].rating >= movies[index].rating) {
+                    break;
+                }
             }
+
             swap(movies[parent], movies[index]);
             index = parent;
         }
@@ -73,12 +91,30 @@ private:
             int rightChild = 2 * index + 2;
             int largest = index;
 
-            if (leftChild < size && computeScore(movies[leftChild]) > computeScore(movies[largest])) {
-                largest = leftChild;
+            if (sortElement == 0) {
+                if (leftChild < size && computeScore(movies[leftChild]) > computeScore(movies[largest])) {
+                    largest = leftChild;
+                }
+                if (rightChild < size && computeScore(movies[rightChild]) > computeScore(movies[largest])) {
+                    largest = rightChild;
+                }
+                // conditional statements to accommodate user input
+            } else if (sortElement == 1) {
+                if (leftChild < size && movies[leftChild].popularity > movies[largest].popularity) {
+                    largest = leftChild;
+                }
+                if (rightChild < size && movies[rightChild].popularity > movies[largest].popularity) {
+                    largest = rightChild;
+                }
+            } else if (sortElement == 2) {
+                if (leftChild < size && movies[leftChild].rating > movies[largest].rating) {
+                    largest = leftChild;
+                }
+                if (rightChild < size && movies[rightChild].rating > movies[largest].rating) {
+                    largest = rightChild;
+                }
             }
-            if (rightChild < size && computeScore(movies[rightChild]) > computeScore(movies[largest])) {
-                largest = rightChild;
-            }
+
             if (largest == index) {
                 break;
             }

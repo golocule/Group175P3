@@ -36,9 +36,7 @@ public:
         return top;
     }
 
-    // returns the movies vector
-
-    // returns the least popular yet highest-rated movie
+    // returns the least popular yet highest-rated movie (top of heap)
     movie top() {
         if (movies.empty()) {
             throw out_of_range("Heap is empty");
